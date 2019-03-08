@@ -1,0 +1,123 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+  <a class="navbar-brand text-light">Issue Application</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+
+  </button>
+
+  <div class="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
+
+    <ul class="navbar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link">{{ createdBy }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout(createdById)"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3>
+          <h2 class="form-signin-heading">Create New Issue</h2>
+        </h3>
+        <form name="form" (ngSubmit)="f.form.valid && createIssue()" #f="ngForm" novalidate>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" placeholder="Enter title" class="form-control" name="title" [(ngModel)]="title"
+              #title1="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title1.invalid }" required />
+            <div *ngIf="f.submitted && title1.invalid" class="invalid-feedback">
+              <div *ngIf="title1.errors.required">Title is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <app-ngx-editor [(ngModel)]="description" [config]="editorConfig" name="description" #description1="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && description1.invalid }" required></app-ngx-editor>
+            <div *ngIf="f.submitted && description1.invalid" class="invalid-feedback">
+              <div *ngIf="description1.errors.required">Description is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select placeholder="Select status" class="form-control" name="status" [(ngModel)]="status"
+              #status1="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status1.invalid }" required>
+              <option value="Backlog">Backlog</option>
+              <option value="In-Progress">In-Progress</option>
+              <option value="In-Test">In-Test</option>
+              <option value="Done">Done</option>
+              <option value="NA">NA</option>
+            </select>
+            <div *ngIf="f.submitted && status1.invalid" class="invalid-feedback">
+              <div *ngIf="status1.errors.required">Status is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="createdFor">Choose Assignee</label>
+            <select placeholder="Select Assignee" class="form-control" name="createdFor" [(ngModel)]="createdFor"
+              #createdFor1="ngModel" (change)="onChangeEvent()"
+              [ngClass]="{ 'is-invalid': f.submitted && createdFor1.invalid }" required>
+
+              <option *ngFor="let user of allUsersSort" [value]="user.userId">{{user.fullName}}</option>
+
+            </select>
+            <div *ngIf="f.submitted && createdFor1.invalid" class="invalid-feedback">
+              <div *ngIf="createdFor1.errors.required">Assignee is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="imageUpload">Select File:</label>
+
+            <div id="fileSelector">
+              <input type="file" name="fileUpload" id="fileUpload" ng2FileSelect [uploader]="uploader"
+                (change)="truthClick1()" [disabled]="disableButton1">
+            </div>
+            <div>
+              <div class="row uploadList" *ngFor="let item of uploader.queue">
+                <div class="col-sm-5">{{item.file.name}}</div>
+                <div class="col-sm-4">
+                  <div class="progress">
+                    <div class="progress-bar bg-success" [ngStyle]="{'width':item.progress+'%'}"></div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="button1">
+                    <button type="button" id="uploadButton" class="btn btn-dark" (click)="item.upload(); truthClick()"
+                      [disabled]="disableButton">Upload</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <br>
+
+
+
+          </div>
+
+
+
+          <div class="form-group">
+            <button class="btn btn-primary">Create</button>
+
+          </div>
+          <a class="btn btn-primary" (click)="goBack()">Back</a>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

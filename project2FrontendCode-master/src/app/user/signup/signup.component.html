@@ -1,0 +1,117 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+    <a class="navbar-brand text-light">Issue Application</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+
+                <a class="nav-link" (click)="goToSignIn()">Sign-In</a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3>
+                    <h2 class="form-signin-heading">Sign Up for issue app</h2>
+                </h3>
+                <form name="form" (ngSubmit)="f.form.valid && signUpFunction()" #f="ngForm" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" placeholder="Enter First Name" class="form-control" name="firstName"
+                            [(ngModel)]="firstName" #firstName1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && firstName1.invalid }" required />
+                        <div *ngIf="f.submitted && firstName1.invalid" class="invalid-feedback">
+                            <div *ngIf="firstName1.errors.required">First Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" placeholder="Enter Last Name" class="form-control" name="lastName"
+                            [(ngModel)]="lastName" #lastName1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && lastName1.invalid }" required />
+                        <div *ngIf="f.submitted && lastName1.invalid" class="invalid-feedback">
+                            <div *ngIf="lastName1.errors.required">Last Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" placeholder="Enter User Name" class="form-control" name="userName"
+                            [(ngModel)]="userName" #userName1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && userName1.invalid }" required />
+                        <div *ngIf="f.submitted && userName1.invalid" class="invalid-feedback">
+                            <div *ngIf="userName1.errors.required">User Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" placeholder="Enter Email" class="form-control" name="email"
+                            [(ngModel)]="email" #email1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && email1.invalid }" required email />
+                        <div *ngIf="f.submitted && email1.invalid" class="invalid-feedback">
+                            <div *ngIf="email1.errors.required">Email is required</div>
+                            <div *ngIf="email1.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" placeholder="Password" class="form-control" name="password"
+                            [(ngModel)]="password" #password1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && password1.invalid }" required minlength="6" />
+                        <div *ngIf="f.submitted && password1.invalid" class="invalid-feedback">
+                            <div *ngIf="password1.errors.required">Password is required</div>
+                            <div *ngIf="password1.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select placeholder="Select country" class="form-control" name="country" [(ngModel)]="country"
+                            #country1="ngModel" (change)="onChangeEvent()"
+                            [ngClass]="{ 'is-invalid': f.submitted && country1.invalid }" required>
+                            <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
+                        </select>
+                        <div *ngIf="f.submitted && country1.invalid" class="invalid-feedback">
+                            <div *ngIf="country1.errors.required">Country is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile No.</label>
+                        <div class="input-group-text">+{{countryCode}}</div>
+                        <input type="number" pattern="^\d{10}$" min="10" placeholder="Enter Mobile No."
+                            class="form-control" name="mobileNumber" [(ngModel)]="mobileNumber" #mobileNumber1="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && mobileNumber1.invalid }" required />
+                        <div *ngIf="f.submitted && mobileNumber1.invalid" class="invalid-feedback">
+                            <div *ngIf="mobileNumber1.errors.required">Mobile Number is required</div>
+                            <div *ngIf="mobileNumber1.invalid">Mobile Number should be 10 numbers</div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <button class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
